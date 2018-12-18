@@ -1,0 +1,158 @@
+{
+  "name": "drupalcoders/quick_start",
+  "description": "Quick Start for Drupal 8",
+  "type": "drupal-profile",
+  "license": "GPL-2.0-or-later",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "authors": [
+    {
+      "name": "lexsoft",
+      "homepage": "http://drupalcoders.org",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "http://drupal.org/project/issues/quick_start",
+    "source": "http://cgit.drupalcode.org/quick_start"
+  },
+  "repositories": {
+    "drupal": {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+      },
+    "assets": {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    },
+    "mglaman": {
+      "type": "vcs",
+      "url": "https://github.com/mglaman/commerce_examples"
+    }
+  },
+  "require": {
+    "composer/installers": "^1.5.0",
+    "oomphinc/composer-installers-extender": "^1.1.2",
+    "cweagans/composer-patches": "^1.6.4",
+    "drupal-composer/drupal-scaffold": "^2.4.0",
+    "drupal/drupal-library-installer-plugin": "^0.3",
+    "drupal/core": "8.6.4",
+    "drupal/config_update": "1.5",
+    "drupal/config_filter": "1.4",
+    "drupal/config_ignore": "2.1",  
+    "drupal/admin_toolbar": "1.24",
+    "drupal/adminimal_admin_toolbar": "1.8",
+    "drupal/better_exposed_filters": "3.0-alpha5",
+    "drupal/block_class": "1.0",
+    "drupal/bootstrap_layouts": "5.1",
+    "drupal/crop": "1.5",
+    "drupal/ctools": "3.0",      
+    "drupal/ds": "3.1",
+    "drupal/extlink": "1.1",
+    "drupal/features": "3.8",
+    "drupal/field_group": "3.0-beta1",
+    "drupal/google_analytics": "2.3",
+    "drupal/libraries_ui": "1.0",               
+    "drupal/link_attributes": "1.5",
+    "drupal/linkit": "4.3",
+    "drupal/anchor_link": "^1.6",
+    "drupal/pathologic": "^1.0-alpha1",    
+    "drupal/paragraphs": "1.5",
+    "drupal/paragraphs_previewer": "1.2",
+    "drupal/rabbit_hole": "1.0-beta4",
+    "drupal/recaptcha": "2.3",
+    "drupal/redirect": "1.3",
+    "drupal/schema_metatag": "1.0",
+    "drupal/simple_sitemap": "2.12",
+    "drupal/userprotect": "1.0",
+    "drupal/viewsreference": "1.2",
+    "drupal/yoast_seo": "1.4",                      
+    "drupal/adminimal_theme": "1.3",
+    "drupal/bootstrap": "3.14",
+    "drupal/commerce": "2.11",
+    "drupal/commerce_migrate": "^2.x-dev",
+    "drupal/commerce_feeds": "1.0-alpha1",
+    "drupal/migrate_source_csv": "2.2",
+    "drupal/migrate_upgrade": "^3.0-rc5",
+    "drupal/migrate_tools": "4.0",
+    "drupal/migrate_plus": "4.0"
+  },
+  "require-dev": {
+    "drush/drush": "^9.0.0",
+    "drupal/console": "^1.8.0",
+    "drupal/coder": "^8.2.12",
+    "drupal/drupal-extension": "^3.4.1",
+    "phpunit/phpunit": "^4.8.35 || ^6.5",
+    "phing/phing": "^2.16.1",
+    "behat/behat": "^3.4.3",
+    "behat/mink": "^1.7.1",
+    "behat/mink-extension": "^2.3.1",
+    "behat/mink-goutte-driver": "^1.2.1",
+    "behat/mink-selenium2-driver": "^1.3.1",
+    "behatch/contexts": "^3.1.0",
+    "emuse/behat-html-formatter": "^0.1.0"
+  },
+  "config": {
+    "bin-dir": "bin/",
+    "secure-http": false,
+    "preferred-install": {
+      "drupal/core": "dist"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "QuickStart\\composer\\": "src/composer"
+    }
+  },
+  "scripts": {
+    "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+    "pre-install-cmd": ["QuickStart\\composer\\ScriptHandler::checkComposerVersion"],
+    "pre-update-cmd": ["QuickStart\\composer\\ScriptHandler::checkComposerVersion"],
+    "post-install-cmd": [
+      "QuickStart\\composer\\ScriptHandler::createRequiredFiles",
+      "QuickStart\\composer\\ScriptHandler::removeGitDirectories",
+      "@composer drupal-scaffold"
+    ],
+    "post-update-cmd": [
+      "QuickStart\\composer\\ScriptHandler::createRequiredFiles",
+      "QuickStart\\composer\\ScriptHandler::removeGitDirectories"
+    ],
+    "post-drupal-scaffold-cmd": ["QuickStart\\composer\\ScriptHandler::postDrupalScaffoldProcedure"]
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-8.x-1.x": "8.5.x-dev"
+    },
+    "installer-types": [
+      "bower-asset",
+      "npm-asset"
+    ],
+    "installer-paths": {
+      "docroot/core": ["drupal/core"],
+      "docroot/profiles/{$name}": ["type:drupal-profile"],
+      "docroot/modules/contrib/{$name}": ["type:drupal-module"],
+      "docroot/themes/contrib/{$name}": ["type:drupal-theme"],
+      "docroot/libraries/slick": ["npm-asset/slick-carousel"],
+      "docroot/libraries/ace": ["npm-asset/ace-builds"],
+      "docroot/libraries/{$name}": [
+        "type:drupal-library",
+        "type:bower-asset",
+        "type:npm-asset"
+      ],
+      "docroot/modules/custom/{$name}": ["type:drupal-custom-module"],
+      "docroot/themes/custom/{$name}": ["type:drupal-custom-theme"],
+      "drush/contrib/{$name}": ["type:drupal-drush"]
+    },
+    "drupal-libraries": {
+      "library-directory": "docroot/libraries",
+      "libraries": [
+          {"name": "dropzone","package": "npm-asset/dropzone"},
+          {"name": "blazy", "package": "npm-asset/blazy"},
+          {"name": "slick", "package": "npm-asset/slick-carousel"},
+          {"name": "ace", "package": "npm-asset/ace-builds"}
+      ]
+    },
+    "enable-patching": true,
+    "composer-exit-on-patch-failure": true
+  }
+}
